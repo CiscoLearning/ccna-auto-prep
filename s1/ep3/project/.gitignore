@@ -1,0 +1,22 @@
+# .gitignore -- a list of paths Git should NOT track.
+#
+# Anything matching a line here stays out of "git status", "git add .", and
+# your commits. Two big reasons this matters for network automation:
+#   1. Secrets: never commit API keys, passwords, or .env files.
+#   2. Noise: generated files, caches, and editor junk don't belong in history.
+
+# Secrets / environment files (e.g. a MERAKI_API_KEY you export locally)
+.env
+*.key
+secrets.*
+
+# Python caches and virtual environments
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / OS clutter
+.vscode/
+.idea/
+.DS_Store
