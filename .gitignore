@@ -1,3 +1,5 @@
 .claude/
 .DS_Store
 .idea/
+# Local credentials (keep .env.example, ignore real .env files)
+.env
