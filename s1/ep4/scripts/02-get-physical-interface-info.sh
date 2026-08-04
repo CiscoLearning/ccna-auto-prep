@@ -2,10 +2,11 @@
 #
 # 02 - Get Physical Interface Information
 #
-# Four GETs that show the same physical interface (GigabitEthernet1) through
-# two different YANG models:
+# Six GETs that show the same physical interface (GigabitEthernet1) through
+# three different YANG models:
 #   - openconfig-interfaces (vendor-neutral)
 #   - Cisco-IOS-XE-native   (vendor-native)
+#   - ietf-interfaces       (IETF standard)
 # and then drills into just the interface description for each model.
 
 # --- Connection details (edit these, or export them in your shell) ----------
@@ -32,6 +33,15 @@ curl -sS -k \
   "https://${HOST}:${PORT}/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1" | jq .
 
 echo
+echo "### Get GE1 Config (IETF) ###"
+curl -sS -k \
+  -u "${USER}:${PASS}" \
+  -H "Accept: application/yang-data+json" \
+  -H "Content-Type: application/yang-data+json" \
+  -X GET \
+  "https://${HOST}:${PORT}/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1" | jq .
+
+echo
 echo "### Get GE1 Description (OpenConfig) ###"
 curl -sS -k \
   -u "${USER}:${PASS}" \
@@ -48,3 +58,12 @@ curl -sS -k \
   -H "Content-Type: application/yang-data+json" \
   -X GET \
   "https://${HOST}:${PORT}/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1/description" | jq .
+
+echo
+echo "### Get GE1 Description (IETF) ###"
+curl -sS -k \
+  -u "${USER}:${PASS}" \
+  -H "Accept: application/yang-data+json" \
+  -H "Content-Type: application/yang-data+json" \
+  -X GET \
+  "https://${HOST}:${PORT}/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1/description" | jq .

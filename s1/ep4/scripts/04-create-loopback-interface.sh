@@ -2,9 +2,10 @@
 #
 # 04 - Create Loopback Interface
 #
-# Creates two loopback interfaces with PUT (idempotent create/replace):
-#   - OpenConfig model  -> Loopback101 (192.0.3.101/32)
+# Creates three loopback interfaces with PUT (idempotent create/replace):
+#   - OpenConfig model    -> Loopback101 (192.0.3.101/32)
 #   - IOS-XE native model -> Loopback100 (192.0.2.100/32)
+#   - IETF model          -> Loopback102 (192.0.4.102/32)
 #
 # The JSON bodies are the same payloads carried by the Bruno collection.
 
@@ -83,4 +84,29 @@ curl -sS -k \
       }
     }
   ]
+}'
+
+echo
+echo "### Create Loopback Interface (IETF - Loopback102) ###"
+curl -sS -k \
+  -u "${USER}:${PASS}" \
+  -H "Accept: application/yang-data+json" \
+  -H "Content-Type: application/yang-data+json" \
+  -X PUT \
+  "https://${HOST}:${PORT}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102" \
+  -d '{
+  "ietf-interfaces:interface": {
+    "name": "Loopback102",
+    "description": "Configured via IETF YANG - RESTCONF",
+    "type": "iana-if-type:softwareLoopback",
+    "enabled": true,
+    "ietf-ip:ipv4": {
+      "address": [
+        {
+          "ip": "192.0.4.102",
+          "netmask": "255.255.255.255"
+        }
+      ]
+    }
+  }
 }'

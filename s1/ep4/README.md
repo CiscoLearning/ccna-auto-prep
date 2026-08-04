@@ -84,13 +84,14 @@ swapping those headers (and sending an XML body on writes) is fully valid in
 both Bruno and the curl calls. The Bruno collection demonstrates the XML
 variant live.
 
-The same interface can be addressed through **two different YANG models**, and
-this episode shows both side by side:
+The same interface can be addressed through **three different YANG models**, and
+this episode shows all three side by side:
 
 | Model | Example path | Flavor |
 |-------|--------------|--------|
 | **OpenConfig** | `openconfig-interfaces:interfaces/interface=GigabitEthernet1` | Vendor-neutral |
 | **IOS-XE native** | `Cisco-IOS-XE-native:native/interface/GigabitEthernet=1` | Vendor-native |
+| **IETF** | `ietf-interfaces:interfaces/interface=GigabitEthernet1` | Standards-body |
 
 ---
 
@@ -123,6 +124,14 @@ and credentials.
 > RESTCONF-capable platform (no Catalyst 8000v or CSR1000v node images), so it
 > can't run this lab. If you're on free CML, use the DevNet sandbox above.
 
+> **Heads-up on the CSR1000v and OpenConfig:** the CSR1000v ships an older
+> RESTCONF/YANG stack than the Catalyst 8000v, so some of the **OpenConfig**
+> calls in this episode may not be supported depending on the OpenConfig model
+> version on your image — an unsupported path returns an error rather than data.
+> The **native** (`Cisco-IOS-XE-native`) and **IETF** (`ietf-interfaces`) calls
+> are the safe fallbacks; prefer those on a CSR1000v, or move to a Catalyst
+> 8000v (or the DevNet sandbox) for the full OpenConfig coverage.
+
 ### Connection details
 
 Whichever path you pick, you'll plug four values — host, port, username,
@@ -146,16 +155,29 @@ placeholders for them:
 
 ## Option A — Bruno
 
-1. Install [Bruno](https://www.usebruno.com/downloads).
+> **You need Bruno 4.0.0 or newer.** The collection is shipped as a **YAML**
+> file ([`CCNAAUTO - Episode 4.yml`](./CCNAAUTO%20-%20Episode%204.yml)), and only
+> Bruno 4.0.0+ can import the YAML collection format. Older versions expect JSON
+> and won't read it.
+
+1. Install [Bruno](https://www.usebruno.com/downloads) (**4.0.0 or newer**).
 2. **Import Collection** → select
-   [`CCNAAUTO-Prep_S1E4_RESTCONF.json`](./CCNAAUTO-Prep_S1E4_RESTCONF.json).
-3. Select the **NetAcad RESTCONF Lab** environment (top-right) and fill in the
+   [`CCNAAUTO - Episode 4.yml`](./CCNAAUTO%20-%20Episode%204.yml).
+3. Select the **CCNAAUTO - Episode 4** environment (top-right) and fill in the
    host, port, username, and password for your device (see
    [Connection details](#connection-details)).
 4. Work through the folders in order (01 → 06).
 
 Auth is **Basic** at the collection root and inherited by every request, so the
 username/password from the environment apply automatically.
+
+> **Disable query-parameter encoding (Bruno 4.0.0).** Bruno 4.0.0 automatically
+> URL-encodes query parameters, which mangles the `=` in RESTCONF list keys
+> (e.g. `interface=GigabitEthernet1` becomes `interface%3DGigabitEthernet1`) and
+> breaks the request. For **each request**, open **Request → Settings** and
+> **disable** *"Automatically encode query parameters in the URL."* The included
+> collection already ships with this turned off on every request, but double-check
+> it after import.
 
 ---
 
@@ -217,9 +239,9 @@ set -a; source .env; set +a
 cd scripts
 
 ./01-get-device-config.sh              # full running config (native model)
-./02-get-physical-interface-info.sh    # GE1 via OpenConfig + native
+./02-get-physical-interface-info.sh    # GE1 via OpenConfig + native + IETF
 ./03-get-loopback-config.sh            # read loopbacks (before)
-./04-create-loopback-interface.sh      # PUT Loopback100 + Loopback101
+./04-create-loopback-interface.sh      # PUT Loopback100 + Loopback101 + Loopback102
 ./05-validate-created-loopbacks.sh     # read loopbacks (after)
 ./06-save-running-config.sh            # write mem via cisco-ia:save-config RPC
 ```
@@ -230,9 +252,9 @@ A typical demo runs `03` → `04` → `05` to show the loopbacks appear after th
 > **On the shared DevNet sandbox:** it's a shared, always-on device, so the
 > write calls behave differently than on your own box:
 > - **`04-create-loopback-interface.sh`** may return an error if someone else
->   already created `Loopback100`/`Loopback101`. That's expected — the resource
->   already exists. Either treat the error as "already done" and move on, or
->   change the loopback numbers in the script to unused ones.
+>   already created `Loopback100`/`Loopback101`/`Loopback102`. That's expected —
+>   the resource already exists. Either treat the error as "already done" and
+>   move on, or change the loopback numbers in the script to unused ones.
 > - **Skip `06-save-running-config.sh`** on the sandbox. Don't run the
 >   `cisco-ia:save-config` RPC against a shared device — leave the running
 >   config unsaved and let it reset. Only use `06` on a device you own.
@@ -284,12 +306,17 @@ Every call below exists in **both** the Bruno collection and the scripts.
 | 01 | GET | `/data/Cisco-IOS-XE-native:native/` | Whole running config |
 | 02 | GET | `/data/openconfig-interfaces:interfaces/interface=GigabitEthernet1` | GE1 (OpenConfig) |
 | 02 | GET | `/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1` | GE1 (native) |
+| 02 | GET | `/data/ietf-interfaces:interfaces/interface=GigabitEthernet1` | GE1 (IETF) |
 | 02 | GET | `/data/openconfig-interfaces:interfaces/interface=GigabitEthernet1/config/description` | GE1 description (OpenConfig) |
 | 02 | GET | `/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1/description` | GE1 description (native) |
+| 02 | GET | `/data/ietf-interfaces:interfaces/interface=GigabitEthernet1/description` | GE1 description (IETF) |
 | 03 | GET | `/data/openconfig-interfaces:interfaces/interface=Loopback101` | Loopback101 (OpenConfig) |
 | 03 | GET | `/data/Cisco-IOS-XE-native:native/interface/Loopback=100` | Loopback100 (native) |
+| 03 | GET | `/data/ietf-interfaces:interfaces/interface=Loopback102` | Loopback102 (IETF) |
 | 04 | PUT | `/data/openconfig-interfaces:interfaces/interface=Loopback101` | Create Loopback101 (OpenConfig) |
 | 04 | PUT | `/data/Cisco-IOS-XE-native:native/interface/Loopback=100` | Create Loopback100 (native) |
+| 04 | PUT | `/data/ietf-interfaces:interfaces/interface=Loopback102` | Create Loopback102 (IETF) |
 | 05 | GET | `/data/Cisco-IOS-XE-native:native/interface/Loopback=100` | Validate Loopback100 |
 | 05 | GET | `/data/openconfig-interfaces:interfaces/interface=Loopback101` | Validate Loopback101 |
+| 05 | GET | `/data/ietf-interfaces:interfaces/interface=Loopback102` | Validate Loopback102 |
 | 06 | POST | `/operations/cisco-ia:save-config` | Save running → startup |

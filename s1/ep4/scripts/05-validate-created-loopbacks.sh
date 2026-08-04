@@ -28,3 +28,12 @@ curl -sS -k \
   -H "Content-Type: application/yang-data+json" \
   -X GET \
   "https://${HOST}:${PORT}/restconf/data/openconfig-interfaces:interfaces/interface=Loopback101" | jq .
+
+echo
+echo "### Get Loopback Config (IETF - Loopback102) ###"
+curl -sS -k \
+  -u "${USER}:${PASS}" \
+  -H "Accept: application/yang-data+json" \
+  -H "Content-Type: application/yang-data+json" \
+  -X GET \
+  "https://${HOST}:${PORT}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102" | jq .

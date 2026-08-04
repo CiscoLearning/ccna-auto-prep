@@ -1,0 +1,469 @@
+opencollection: 1.0.0
+info:
+  name: CCNAAUTO | Episode 4
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ''
+      port: ''
+      auth:
+        username: ''
+        password: ''
+      bypassProxy: ''
+  environments:
+    - name: CCNAAUTO - Episode 4
+      variables:
+        - name: hostname
+          value: 192.168.128.195
+        - name: port
+          value: '443'
+        - name: username
+          value: admin
+        - name: password
+          value: C1sco12345
+items:
+  - info:
+      name: 01 - Get Device Config
+      type: folder
+      seq: 2
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Get Device Config (Top Level)
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: 02 - Get Physical Interface Information
+      type: folder
+      seq: 3
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Get GE1 Config (OpenConfig)
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/openconfig-interfaces:interfaces/interface=GigabitEthernet1
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get GE1 Config
+          type: http
+          seq: 1
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get GE1 Description (OpenConfig)
+          type: http
+          seq: 5
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/openconfig-interfaces:interfaces/interface=GigabitEthernet1/config/description
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get GE1 Description
+          type: http
+          seq: 4
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/interface/GigabitEthernet=1/description
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get GE1 Config (IETF)
+          type: http
+          seq: 3
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get GE1 Description (IETF)
+          type: http
+          seq: 6
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/ietf-interfaces:interfaces/interface=GigabitEthernet1/description
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: 03 - Get Loopback Configuration (MODIFY)
+      type: folder
+      seq: 4
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Get Loopback Config (OpenConfig)
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/openconfig-interfaces:interfaces/interface=Loopback101
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Loopback Config
+          type: http
+          seq: 1
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/interface/Loopback=100
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Loopback Config (IETF)
+          type: http
+          seq: 3
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: 04 - Create Looback Interface (MODIFY)
+      type: folder
+      seq: 5
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Create Loopback Interface (OpenConfig)
+          type: http
+          seq: 2
+        http:
+          method: PUT
+          url: https://{{hostname}}:{{port}}/restconf/data/openconfig-interfaces:interfaces/interface=Loopback101
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          body:
+            type: json
+            data: |-
+              {
+                "openconfig-interfaces:interface": [
+                  {
+                    "name": "Loopback101",
+                    "config": {
+                      "name": "Loopback101",
+                      "type": "iana-if-type:softwareLoopback",
+                      "enabled": true,
+                      "description": "Configured via RESTCONF and OpenConfig models"
+                    },
+                    "subinterfaces": {
+                      "subinterface": [
+                        {
+                          "index": 0,
+                          "config": {
+                            "index": 0,
+                            "enabled": true,
+                            "description": "Configured via RESTCONF and OpenConfig models"
+                          },
+                          "openconfig-if-ip:ipv4": {
+                            "addresses": {
+                              "address": [
+                                {
+                                  "ip": "192.0.3.101",
+                                  "config": {
+                                    "ip": "192.0.3.101",
+                                    "prefix-length": 32
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Create Loopback Interface
+          type: http
+          seq: 1
+        http:
+          method: PUT
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/interface/Loopback=100
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          body:
+            type: json
+            data: |-
+              {
+                "Cisco-IOS-XE-native:Loopback": [
+                  {
+                    "name": 100,
+                    "description": "Created via RESTCONF",
+                    "ip": {
+                      "address": {
+                        "primary": {
+                          "address": "192.0.2.100",
+                          "mask": "255.255.255.255"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Create Loopback Interface (IETF)
+          type: http
+          seq: 3
+        http:
+          method: PUT
+          url: https://{{hostname}}:{{port}}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          body:
+            type: json
+            data: |-
+              {
+                "ietf-interfaces:interface": {
+                  "name": "Loopback102",
+                  "description": "Configured via IETF YANG - RESTCONF",
+                  "type": "iana-if-type:softwareLoopback",
+                  "enabled": true,
+                  "ietf-ip:ipv4": {
+                    "address": [
+                      {
+                        "ip": "192.0.4.102",
+                        "netmask": "255.255.255.255"
+                      }
+                    ]
+                  }
+                }
+              }
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: 05 - Validate Created Loopbacks (MODIFY)
+      type: folder
+      seq: 5
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Get Loopback Config (OpenConfig)
+          type: http
+          seq: 2
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/openconfig-interfaces:interfaces/interface=Loopback101
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Loopback Config
+          type: http
+          seq: 1
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/Cisco-IOS-XE-native:native/interface/Loopback=100
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+      - info:
+          name: Get Loopback Config (IETF)
+          type: http
+          seq: 3
+        http:
+          method: GET
+          url: https://{{hostname}}:{{port}}/restconf/data/ietf-interfaces:interfaces/interface=Loopback102
+          headers:
+            - name: Content-Type
+              value: application/yang-data+json
+            - name: Accept
+              value: application/yang-data+json
+          auth: inherit
+        settings:
+          encodeUrl: false
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+  - info:
+      name: 06 - Save Running Config to Startup
+      type: folder
+      seq: 6
+    request:
+      auth: inherit
+    items:
+      - info:
+          name: Save Config
+          type: http
+          seq: 1
+        http:
+          method: POST
+          url: https://{{hostname}}:{{port}}/restconf/operations/cisco-ia:save-config
+          headers:
+            - name: Accept
+              value: application/yang-data+json
+            - name: Content-Type
+              value: application/yang-data+json
+          body:
+            type: json
+            data: '{}'
+          auth: inherit
+        settings:
+          encodeUrl: true
+          timeout: 0
+          followRedirects: true
+          maxRedirects: 5
+request:
+  auth:
+    type: basic
+    username: '{{username}}'
+    password: '{{password}}'
+bundled: true
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
+    exportedAt: '2026-08-04T00:24:04.875Z'
+    exportedUsing: Bruno
