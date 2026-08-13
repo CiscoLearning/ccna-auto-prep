@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NETCONF <get-config> — read the system hostname (native model).
+  This is the "read" half: a <filter> that names one leaf, so the device
+  returns only <native><hostname>…</hostname></native> instead of the whole
+  running config. YANGSuite builds this same envelope when you select the
+  hostname leaf and choose the "get-config" operation.
+-->
+<rpc message-id="101" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <get-config>
+    <source>
+      <running/>
+    </source>
+    <filter>
+      <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <hostname/>
+      </native>
+    </filter>
+  </get-config>
+</rpc>

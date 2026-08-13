@@ -1,0 +1,3 @@
+module: Cisco-IOS-XE-native
+  +--rw native
+     +--rw hostname?   string

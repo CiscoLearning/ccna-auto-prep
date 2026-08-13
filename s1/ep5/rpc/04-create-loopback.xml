@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NETCONF <edit-config> — create Loopback100 with a description and /32 IP.
+  This walks the same path you see in trees/native-interface-loopback.tree:
+    native > interface > Loopback [name] > { description, ip/address/primary }
+  Every XML element below is a node in that tree. <name> is the list key (which
+  Loopback), and ip/address/primary/{address,mask} is the (address-choice)
+  "primary" case. YANGSuite assembles this exact nesting when you fill in those
+  leaves and choose "edit-config".
+-->
+<rpc message-id="104" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config>
+    <target>
+      <running/>
+    </target>
+    <config>
+      <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <interface>
+          <Loopback>
+            <name>100</name>
+            <description>Configured via NETCONF</description>
+            <ip>
+              <address>
+                <primary>
+                  <address>10.0.0.100</address>
+                  <mask>255.255.255.255</mask>
+                </primary>
+              </address>
+            </ip>
+          </Loopback>
+        </interface>
+      </native>
+    </config>
+  </edit-config>
+</rpc>

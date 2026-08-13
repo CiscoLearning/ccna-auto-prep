@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NETCONF <edit-config> — set the system hostname (native model).
+  This is the "write" half. <target> is the datastore being changed
+  (running, on IOS-XE), and everything inside <config> is the YANG-modeled
+  data to merge in. YANGSuite generates this XML when you select the
+  hostname leaf, type a value, and choose the "edit-config" operation.
+-->
+<rpc message-id="102" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <edit-config>
+    <target>
+      <running/>
+    </target>
+    <config>
+      <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <hostname>CAT8K-LAB-01</hostname>
+      </native>
+    </config>
+  </edit-config>
+</rpc>

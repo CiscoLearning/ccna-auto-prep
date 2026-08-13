@@ -21,6 +21,7 @@ The material is organized into **seasons** and **episodes**:
 | [s1/ep2](./s1/ep2) | Data Formats | JSON, YAML, and XML side by side: the same network-device document in all three formats, how objects/arrays/types map between them, and converting losslessly with `yq`. |
 | [s1/ep3](./s1/ep3) | Version Control with Git | Why version control matters and the everyday Git operations run live: clone, add/remove, commit, branch, merge (with conflict resolution), diff, and push/pull. A README runbook + bare command sheet, practiced locally on a small Python + JSON Meraki-inventory project — no account or API key needed. |
 | [s1/ep4](./s1/ep4) | RESTCONF with Bruno & curl | RESTCONF hands-on: the same read/create/save calls driven from Bruno and from `curl`+`jq` shell scripts, across native, OpenConfig, and IETF models. A Bruno collection, runnable scripts, and practice questions mapped to topics 3.8, 5.10, 5.11. |
+| [s1/ep5](./s1/ep5) | NETCONF, YANG & YANGSuite | The NETCONF transport and reading YANG models: exploring a CSR1000v's native model in YANGSuite and comparing it to RFC 8340 YANG trees (from `pyang`). Walks hostname and interface lists from tree → `<edit-config>` RPC, with the exact 17.3 native trees, sample RPC XML, and practice questions for topics 3.8, 5.10, 5.11. |
 
 *More episodes coming as the series continues.*
 

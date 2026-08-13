@@ -1,0 +1,19 @@
+module: Cisco-IOS-XE-native
+  +--rw native
+     +--rw interface
+        +--rw Loopback* [name]
+           +--rw name           uint32
+           +--rw description?   string
+           +--rw ip
+              +--rw (address-choice)?
+                 +--:(address)
+                    +--rw address
+                       +--rw (address-choice)?
+                          +--:(fixed-case)
+                             +--rw secondary* [address]
+                             |  +--rw address      inet:ipv4-address
+                             |  +--rw mask         inet:ipv4-address
+                             |  +--rw secondary    empty
+                             +--rw primary
+                                +--rw address?   inet:ipv4-address
+                                +--rw mask?      inet:ipv4-address

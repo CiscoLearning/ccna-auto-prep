@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  NETCONF <get-config> — read the interface list (native model).
+  The <filter> names the <interface> container but leaves it empty, so the
+  device returns every interface entry it has: each GigabitEthernet, Loopback,
+  etc. Compare the shape of what comes back to the YANG tree in
+  trees/native-interface-list.tree — the "* [name]" lists in the tree are
+  exactly the repeated <GigabitEthernet>/<Loopback> elements in the reply.
+-->
+<rpc message-id="103" xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <get-config>
+    <source>
+      <running/>
+    </source>
+    <filter>
+      <native xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-native">
+        <interface/>
+      </native>
+    </filter>
+  </get-config>
+</rpc>
