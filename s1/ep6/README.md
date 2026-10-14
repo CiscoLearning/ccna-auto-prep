@@ -124,6 +124,7 @@ Each script calls `load_dotenv()` to read `.env`, so there's nothing to
 
 | File | Summary |
 |------|---------|
+| [`00_venv.md`](./00_venv.md) | The three commands to build and activate a virtual environment and install `requirements.txt`. Run these first. |
 | [`01_requests_basics.py`](./01_requests_basics.py) | GET a new deck and parse the JSON text into a dictionary (`json.loads` / `json.dumps`), loop through a dictionary and a list of dictionaries, GET with path + query parameters, POST to reshuffle, and a deliberate **404**. |
 | [`02_meraki_requests.py`](./02_meraki_requests.py) | Loops over the orgs your key can see and uses an `if`/`else` to print only `ORG_NAME`, then lists every device in `MERAKI_ORG_ID`. Ends with a bad key so you see a **401**. |
 | [`03_meraki_sdk_switchports.py`](./03_meraki_sdk_switchports.py) | Uses `meraki.DashboardAPI` to find the switches in the org and list each one's ports: port ID, name, enabled, type, VLAN. |

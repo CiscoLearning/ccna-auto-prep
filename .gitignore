@@ -3,3 +3,7 @@
 .idea/
 # Local credentials (keep .env.example, ignore real .env files)
 .env
+
+# Python virtual environments and caches
+.venv/
+__pycache__/
